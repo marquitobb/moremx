@@ -1,0 +1,34 @@
+name: moremx
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  carousel_pro: ^1.0.0
+
+  cupertino_icons: ^0.1.2
+
+  http: any
+  toast: ^0.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/d2.jpg
+    - assets/d3.jpg
+    - assets/d4.jpg
+    - assets/d5.jpg
+    - assets/d6.jpg
