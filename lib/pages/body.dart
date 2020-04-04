@@ -1,6 +1,7 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:moremx/components/horizontal_listview.dart';
+import 'package:moremx/components/products.dart';
 import 'package:moremx/pages/login.dart';
 
 class Cuerpo extends StatefulWidget {
@@ -77,12 +78,26 @@ class _CuerpoState extends State<Cuerpo> {
       body: WillPopScope(
         child: ListView(
           children: <Widget>[
+            //principal image carusel
             image_carousel,
+            //title of the categories
             Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text("categorias"),
+              child: Text("Categorias"),
             ),
+            //list of categories
             HorizontalList(),
+            //title of the products
+            Padding(
+              padding: EdgeInsets.only(right: 5.0,top: 20.0),
+              child: Text("Products"),
+            ),
+            //grind view (products)
+            Container(
+              height: 320.0,
+              child: Products(),
+            )
+
           ],
         ),
         onWillPop: _onBackPPressend,
