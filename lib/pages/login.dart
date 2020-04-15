@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:moremx/pages/inicio.dart';
 import 'package:moremx/pages/registrar.dart';
+import 'package:moremx/widgets/futures/futuLogin.dart';
 import 'dart:async';
 import 'package:toast/toast.dart';
 import 'package:http/http.dart' as http;
 
-
+//stateful login
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -14,34 +15,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController controlUsuario = new TextEditingController();
   TextEditingController controlContrasena = new TextEditingController();
-
-  Future<List> obtenerUsuario() async {
-    var url = "https://primeromc.000webhostapp.com/obtenerUsuario.php";
-    //var url = "http://192.168.1.69/api_login_flutter/obtenerUsuario.php";
-    final response = await http.post(url, body: {
-      "usuario": controlUsuario.text,
-      "contrasena": controlContrasena.text
-    });
-    if (response.body == "CORRECTO") {
-      Toast.show("LOGIN CORRECTO", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.CENTER,
-          backgroundColor: Colors.green,
-          textColor: Colors.white);
-      //Navigator.of(context).pushNamed('/screen2');
-      //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) {
-        return HomePage();
-      }));
-    } else if (response.body == "ERROR") {
-      Toast.show("LOGIN INCORRECTO", context,
-          duration: Toast.LENGTH_LONG,
-          gravity: Toast.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +42,6 @@ class _LoginPageState extends State<LoginPage> {
                         image: DecorationImage(
                           fit: BoxFit.fill,
                           image: AssetImage("assets/more.jpg"),
-                          //image: new NetworkImage("https://i.imgur.com/BoN9kdC.png")
                         ),
                       ),
                     ),
@@ -80,14 +52,15 @@ class _LoginPageState extends State<LoginPage> {
                         children: <Widget>[
                           TextField(
                             controller: controlUsuario,
+                            keyboardType: TextInputType.emailAddress,
                             obscureText: false,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                             decoration: InputDecoration(
-                              labelText: "USUARIO",
+                              labelText: "Email",
                               icon: Icon(
-                                Icons.person_outline,
+                                Icons.email,
                                 color: Colors.white,
                               ),
                               labelStyle: TextStyle(
@@ -102,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           TextField(
                             controller: controlContrasena,
+                            keyboardType: TextInputType.visiblePassword,
                             obscureText: true,
                             style: TextStyle(
                                 color: Colors.white,
@@ -162,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
+  //Registrer Button
   Widget btnRegis(){
     return RaisedButton.icon(
       shape: RoundedRectangleBorder(
@@ -177,11 +151,13 @@ class _LoginPageState extends State<LoginPage> {
       color: Colors.blue,
     );
   }
-
+  //Login Button 
   Widget  btnEntra(){
     return RaisedButton.icon(
       onPressed: (){
-        obtenerUsuario();
+        String email = controlUsuario.text;
+        String pass = controlContrasena.text;
+        obtenerUser(context, email, pass);
       }, 
       icon: Icon(Icons.touch_app, color: Colors.white,size: 22,), 
       label: Text("Inicia sesion", style: TextStyle(color: Colors.white, fontSize: 22),),
@@ -192,38 +168,5 @@ class _LoginPageState extends State<LoginPage> {
       color: Colors.green,
     );
   }
-
-  Widget btnEntrar() {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(18.0),
-        side: BorderSide(color: Colors.green),
-      ),
-      color: Colors.green,
-      textColor: Colors.white,
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.touch_app,
-              color: Colors.white,
-            ),
-            Text(
-              "INICIAR SESION",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-              ),
-            ),
-          ],
-        ),
-      ),
-      onPressed: () {
-        obtenerUsuario();
-      },
-    );
-  }
-
   
 }
